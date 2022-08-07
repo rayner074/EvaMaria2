@@ -1,6 +1,6 @@
 class script(object):
     START_TXT = """Helo {},
-My Name is <a href=https://t.me/{}>{}</a>, I can provide Movies, Just add me in your Group and Enjoy ☺️😁"""
+My Name is <a href=https://t.me/{}>{}</a>, I can provide Movies File size upto 4GB, Just add me in your Group and Enjoy ☺️😁"""
     HELP_TXT = """Hey {}
 Here is the Help For my commands."""
     ABOUT_TXT = """⍟ My Name: {}
