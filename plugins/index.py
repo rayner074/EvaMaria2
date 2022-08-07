@@ -185,9 +185,9 @@ async def index_files_to_db(lst_msg_id, chat, msg, bot):
                 if current % 20 == 0:
                     can = [[InlineKeyboardButton('𝙲𝙰𝙽𝙲𝙴𝙻', callback_data='index_cancel')]]
                     reply = InlineKeyboardMarkup(can)
-                    await msg.edit_text(text=f"• 𝚃𝙾𝚃𝙰𝙻 𝙼𝙴𝚂𝚂𝙰𝙶𝙴𝚂 𝙵𝙴𝚃𝙲𝙷𝙴𝙳 : <code>{current}</code>\n• 𝚃𝙾𝚃𝙰𝙻 𝙼𝙴𝚂𝚂𝙰𝙶𝙴𝚂 𝚂𝙰𝚅𝙴𝙳 : <code>{total_files}</code>\n• 𝙳𝚄𝙿𝙻𝙸𝙲𝙰𝚃𝙴 𝙵𝙸𝙻𝙴𝚂 𝚂𝙺𝙸𝙿𝙴𝙳 : <code>{duplicate}</code>\n• 𝙳𝙴𝙻𝙴𝚃𝙴𝙳 𝙼𝙴𝚂𝚂𝙰𝙶𝙴𝚂 𝚂𝙺𝙸𝙿𝙿𝙴𝙳 : <code>{deleted}</code>\n 𝙽𝙾𝙽-𝙼𝙴𝙳𝙸𝙰 𝙼𝙴𝚂𝚂𝙰𝙶𝙴𝚂 𝚂𝙺𝙸𝙿𝙿𝙴𝙳 : <code>{no_media}</code>\n• 𝙴𝚁𝚁𝙾𝚁 𝙾𝙲𝙲𝚄𝚁𝙴𝙳 : <code>{errors}</code>", reply_markup=reply)
+                    await msg.edit_text(text=f"Indexing...!\n• Total messages fetched : <code>{current}</code>\n• Total messages saved : <code>{total_files}</code>\n• Duplicate Files Skipped : <code>{duplicate}</code>\n• Deleted messages skipped : <code>{deleted}</code>\n• Non-Media messages skipped : <code>{no_media}</code>\n• Error occurred : <code>{errors}</code>", reply_markup=reply)
         except Exception as e:
             logger.exception(e)
             await msg.edit(f'Error: {e}')
         else:
-            await msg.edit(f'• 𝚂𝚄𝙲𝙲𝙴𝚂𝙵𝚄𝙻𝙻𝚈 𝚂𝙰𝚅𝙴𝙳 <code>{total_files}</code> 𝚃𝙾 𝙳𝙰𝚃𝙰𝙱𝙰𝚂𝙴.!\n• 𝙳𝚄𝙿𝙻𝙸𝙲𝙰𝚃𝙴 𝙵𝙸𝙻𝙴𝚂 𝚂𝙺𝙸𝙿𝙿𝙴𝙳 : <code>{duplicate}</code>\n• 𝙳𝙴𝙻𝙴𝚃𝙴𝙳 𝙼𝙴𝚂𝚂𝙰𝙶𝙴𝚂 𝚂𝙺𝙸𝙿𝙿𝙴𝙳 : <code>{deleted}</code>\n• 𝙽𝙾𝙽-𝙼𝙴𝙳𝙸𝙰 𝙼𝙴𝚂𝚂𝙰𝙶𝙴𝚂 𝚂𝙺𝙸𝙿𝙿𝙴𝙳 : <code>{no_media}</code>\n• 𝙴𝚁𝚁𝙾𝚁𝚂 𝙾𝙲𝙲𝚄𝚁𝙴𝙳 : <code>{errors}</code>')
+            await msg.edit(f'• Successfully Saved <code>{total_files}</code> files to Database.!\n• Duplicate Files Skipped : <code>{duplicate}</code>\n• Deleted messages Skipped : <code>{deleted}</code>\n• Non-Media messages skipped : <code>{no_media}</code>\n• Errors occurred : <code>{errors}</code>')
