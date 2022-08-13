@@ -13,6 +13,7 @@ from database.ia_filterdb import Media
 from database.users_chats_db import db
 from info import SESSION, API_ID, API_HASH, BOT_TOKEN, LOG_STR
 from typing import Union, Optional, AsyncGenerator
+from pyrogram import types
 from utils import temp
 
 class Bot(Client):
