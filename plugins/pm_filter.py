@@ -357,7 +357,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             elif settings['botpm']:
                 await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
                 return
-            else:
+            elif AUTO_DLT == True:
                 jkl = await client.send_cached_media(
                     chat_id=query.from_user.id,
                     file_id=file_id,
@@ -393,7 +393,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             except Exception as e:
                 logger.exception(e)
                 f_caption = f_caption
-        if f_caption is None:
+        if f_caption is None and AUTO_DLT == True:
             f_caption = f"{title}"
         await query.answer()
         jkk = await client.send_cached_media(
