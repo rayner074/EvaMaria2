@@ -250,7 +250,8 @@ async def start(client, message):
             f_caption=f_caption
     if f_caption is None:
         f_caption = f"{files.file_name}"
-    if AUTO_DLT == True: 
+    if AUTO_DLT == True:
+        try:
            jkd = await client.send_cached_media(
                chat_id=message.from_user.id,
                file_id=file_id,
@@ -258,7 +259,9 @@ async def start(client, message):
                protect_content=True if pre == 'filep' else False,
                )
            await asyncio.sleep(50)
-           await jkd.delete()         
+           await jkd.delete()
+        except:
+            pass
     else:
        await client.send_cached_media(
            chat_id=message.from_user.id,
