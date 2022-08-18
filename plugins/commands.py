@@ -138,14 +138,17 @@ async def start(client, message):
                 f_caption = f"{title}"
             try:
                 if AUTO_DLT == True:
-                   jk = await client.send_cached_media(
-                       chat_id=message.from_user.id,
-                       file_id=msg.get("file_id"),
-                       caption=f_caption,
-                       protect_content=msg.get('protect', False),
-                       )
-                   await asyncio.sleep(50)
-                   await jk.delete()
+                    try:
+                        jk = await client.send_cached_media(
+                            chat_id=message.from_user.id,
+                            file_id=msg.get("file_id"),
+                            caption=f_caption,
+                            protect_content=msg.get('protect', False),
+                            )
+                        await asyncio.sleep(50)
+                        await jk.delete()
+                    except Exception as e:
+                        logger.exception(e)
                 else:
                     await client.send_cached_media(
                         chat_id=message.from_user.id,
@@ -260,8 +263,8 @@ async def start(client, message):
                )
            await asyncio.sleep(50)
            await jkd.delete()
-        except:
-            pass
+        except Exception as e:
+           logger.exception(e)
     else:
        await client.send_cached_media(
            chat_id=message.from_user.id,
