@@ -28,7 +28,7 @@ logger.setLevel(logging.ERROR)
 
 BUTTONS = {}
 SPELL_CHECK = {}
-AUTO_DLT = {}
+AUTO_DLTS = True
 
 @Client.on_message(filters.group & filters.text & filters.incoming)
 async def give_filter(client, message):
@@ -364,7 +364,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     protect_content=True if ident == "filep" else False 
                 )
                 settings = await get_settings(query.message.chat.id)
-                if AUTO_DLT == True:
+                if AUTO_DLTs == True:
                     try:
                         await query.answer('Check PM, I have sent files in pm', show_alert=True)
                         await asyncio.sleep(30)
@@ -408,7 +408,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             caption=f_caption,
             protect_content=True if ident == 'checksubp' else False
         )      
-        if AUTO_DLT == True:
+        if AUTO_DLTS == True:
             try:
                 await asyncio.sleep(30)
                 await jkk.delete()
