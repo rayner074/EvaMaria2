@@ -147,7 +147,7 @@ async def start(client, message):
                           )
                       await asyncio.sleep(50)
                       await jk.delete()
-                else:
+                except:
                     await client.send_cached_media(
                           chat_id=message.from_user.id,
                           file_id=msg.get("file_id"),
@@ -261,7 +261,7 @@ async def start(client, message):
                  )
              await asyncio.sleep(50)
              await jkd.delete()         
-     else:
+     except:
          await client.send_cached_media(
              chat_id=message.from_user.id,
              file_id=file_id,
