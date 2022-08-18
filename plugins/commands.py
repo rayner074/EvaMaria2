@@ -137,8 +137,7 @@ async def start(client, message):
             if f_caption is None:
                 f_caption = f"{title}"
             try:
-                settings = await get_settings(message.chat.id)
-                         
+                settings = await get_settings(message.chat.id)                         
                 jk = await client.send_cached_media(
                     chat_id=message.from_user.id,
                     file_id=msg.get("file_id"),
@@ -216,7 +215,7 @@ async def start(client, message):
         
 
     files_ = await get_file_details(file_id)  
-    settings = await get_settings(autodelete)         
+    settings = await get_settings(group_id)         
     if not files_:
         pre, file_id = ((base64.urlsafe_b64decode(data + "=" * (-len(data) % 4))).decode("ascii")).split("_", 1)
         try:
