@@ -257,7 +257,7 @@ async def start(client, message):
         await asyncio.sleep(30)
         await jkd.delete()
     else:
-        continue
+        return
 @Client.on_message(filters.command('channel') & filters.user(ADMINS))
 async def channel_info(bot, message):
            
