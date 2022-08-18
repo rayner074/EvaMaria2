@@ -364,20 +364,14 @@ async def delete_all_index(bot, message):
     await message.reply_text(
         'This will delete all indexed files.\nDo you want to continue??',
         reply_markup=InlineKeyboardMarkup(
-            [
-                [
+            [[
                     InlineKeyboardButton(
-                        text="YES", callback_data="autofilter_delete"
-                    )
-                ],
-                [
+                        text="YES", callback_data="autofilter_delete")
+                ],[
                     InlineKeyboardButton(
-                        text="CANCEL", callback_data="close_data"
-                    )
+                        text="CANCEL", callback_data="close_data")
                 ],
-            ]
-        ),
-        quote=True,
+            ]), quote=True,
     )
 
 
@@ -437,8 +431,7 @@ async def settings(client, message):
                     'Single' if settings["button"] else 'Double',
                     callback_data=f'setgs#button#{settings["button"]}#{grp_id}',
                 ),
-            ],
-            [
+            ],[
                 InlineKeyboardButton(
                     'Bot PM',
                     callback_data=f'setgs#botpm#{settings["botpm"]}#{grp_id}',
@@ -447,8 +440,7 @@ async def settings(client, message):
                     '✅ Yes' if settings["botpm"] else '❌ No',
                     callback_data=f'setgs#botpm#{settings["botpm"]}#{grp_id}',
                 ),
-            ],
-            [
+            ],[
                 InlineKeyboardButton(
                     'File Secure',
                     callback_data=f'setgs#file_secure#{settings["file_secure"]}#{grp_id}',
@@ -457,8 +449,7 @@ async def settings(client, message):
                     '✅ Yes' if settings["file_secure"] else '❌ No',
                     callback_data=f'setgs#file_secure#{settings["file_secure"]}#{grp_id}',
                 ),
-            ],
-            [
+            ],[
                 InlineKeyboardButton(
                     'IMDB',
                     callback_data=f'setgs#imdb#{settings["imdb"]}#{grp_id}',
@@ -467,8 +458,7 @@ async def settings(client, message):
                     '✅ Yes' if settings["imdb"] else '❌ No',
                     callback_data=f'setgs#imdb#{settings["imdb"]}#{grp_id}',
                 ),
-            ],
-            [
+            ],[
                 InlineKeyboardButton(
                     'Spell Check',
                     callback_data=f'setgs#spell_check#{settings["spell_check"]}#{grp_id}',
@@ -477,8 +467,7 @@ async def settings(client, message):
                     '✅ Yes' if settings["spell_check"] else '❌ No',
                     callback_data=f'setgs#spell_check#{settings["spell_check"]}#{grp_id}',
                 ),
-            ],
-            [
+            ],[
                 InlineKeyboardButton(
                     'Welcome',
                     callback_data=f'setgs#welcome#{settings["welcome"]}#{grp_id}',
@@ -487,7 +476,16 @@ async def settings(client, message):
                     '✅ Yes' if settings["welcome"] else '❌ No',
                     callback_data=f'setgs#welcome#{settings["welcome"]}#{grp_id}',
                 ),
-            ],
+            ],[
+                InlineKeyboardButton(
+                    'Auto Delete',
+                    callback_data=f'setgs#autodl#{settings["autodl"]}#{grp_id}',
+                ),
+                InlineKeyboardButton(
+                    '✅ Yes' if settings["botpm"] else '❌ No',
+                    callback_data=f'setgs#autodl#{settings["autodl"]}#{grp_id}',
+                ),
+            ]
         ]
 
         reply_markup = InlineKeyboardMarkup(buttons)
