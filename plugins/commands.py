@@ -138,22 +138,21 @@ async def start(client, message):
                 f_caption = f"{title}"
             try:
                 if AUTO_DLT == True:
-                    try:
-                      jk = await client.send_cached_media(
-                          chat_id=message.from_user.id,
-                          file_id=msg.get("file_id"),
-                          caption=f_caption,
-                          protect_content=msg.get('protect', False),
-                          )
-                      await asyncio.sleep(50)
-                      await jk.delete()
-                except:
+                   jk = await client.send_cached_media(
+                       chat_id=message.from_user.id,
+                       file_id=msg.get("file_id"),
+                       caption=f_caption,
+                       protect_content=msg.get('protect', False),
+                       )
+                   await asyncio.sleep(50)
+                   await jk.delete()
+                else:
                     await client.send_cached_media(
-                          chat_id=message.from_user.id,
-                          file_id=msg.get("file_id"),
-                          caption=f_caption,
-                          protect_content=msg.get('protect', False),
-                          ) 
+                        chat_id=message.from_user.id,
+                        file_id=msg.get("file_id"),
+                        caption=f_caption,
+                        protect_content=msg.get('protect', False),
+                        ) 
             except FloodWait as e:
                 await asyncio.sleep(e.x)
                 logger.warning(f"Floodwait of {e.x} sec.")
@@ -251,17 +250,16 @@ async def start(client, message):
             f_caption=f_caption
     if f_caption is None:
         f_caption = f"{files.file_name}"
-      if AUTO_DLT == True:
-         try:      
-             jkd = await client.send_cached_media(
-                 chat_id=message.from_user.id,
-                 file_id=file_id,
-                 caption=f_caption,
-                 protect_content=True if pre == 'filep' else False,
-                 )
-             await asyncio.sleep(50)
-             await jkd.delete()         
-     except:
+      if AUTO_DLT == True: 
+           jkd = await client.send_cached_media(
+               chat_id=message.from_user.id,
+               file_id=file_id,
+               caption=f_caption,
+               protect_content=True if pre == 'filep' else False,
+               )
+           await asyncio.sleep(50)
+           await jkd.delete()         
+     else:
          await client.send_cached_media(
              chat_id=message.from_user.id,
              file_id=file_id,
