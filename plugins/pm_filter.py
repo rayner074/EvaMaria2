@@ -393,7 +393,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             except Exception as e:
                 logger.exception(e)
                 f_caption = f_caption
-        if f_caption is None and AUTO_DLT == True:
+        if f_caption is None:
             f_caption = f"{title}"
         await query.answer()
         jkk = await client.send_cached_media(
