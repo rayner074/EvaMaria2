@@ -364,10 +364,13 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     protect_content=True if ident == "filep" else False 
                 )
                 settings = await get_settings(query.message.chat.id)
-                if settings['autodelete'] is True:
-                    await query.answer('Check PM, I have sent files in pm', show_alert=True)
-                    await asyncio.sleep(30)
-                    await jkl.delete()
+                if AUTO_DLT == True:
+                    try:
+                        await query.answer('Check PM, I have sent files in pm', show_alert=True)
+                        await asyncio.sleep(30)
+                        await jkl.delete()
+                    except:
+                        pass
                 else:
                     await query.answer('Check PM, I have sent files in pm', show_alert=True)
         except UserIsBlocked:
@@ -404,11 +407,13 @@ async def cb_handler(client: Client, query: CallbackQuery):
             file_id=file_id,
             caption=f_caption,
             protect_content=True if ident == 'checksubp' else False
-        )
-        settings = await get_settings(message.chat.id)
-        if settings['autodelete'] is True:
-            await asyncio.sleep(30)
-            await jkk.delete()
+        )      
+        if AUTO_DLT == True:
+            try:
+                await asyncio.sleep(30)
+                await jkk.delete()
+            except:
+                pass 
         else:
             None
 
@@ -619,12 +624,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 [
                     InlineKeyboardButton('Welcome', callback_data=f'setgs#welcome#{settings["welcome"]}#{str(grp_id)}'),
                     InlineKeyboardButton('✅ Yes' if settings["welcome"] else '❌ No',
-                                         callback_data=f'setgs#welcome#{settings["welcome"]}#{str(grp_id)}')
-                ],
-                [
-                    InlineKeyboardButton('Auto Delete', callback_data=f'setgs#autodelete#{settings["autodelete"]}#{str(grp_id)}'),
-                    InlineKeyboardButton('✅ Yes' if settings["autodelete"] else '❌ No',
-                                         callback_data=f'setgs#autodelete#{settings["autodelete"]}#{str(grp_id)}')
+                                         callback_data=f'setgs#welcome#{settings["welcome"]}#{str(grp_id)}')               
                 ]
             ]
             reply_markup = InlineKeyboardMarkup(buttons)
