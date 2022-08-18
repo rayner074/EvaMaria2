@@ -138,7 +138,7 @@ async def start(client, message):
                 f_caption = f"{title}"
             try:
                 settings = await get_settings(message.chat.id)
-                AUTO_DELT = settings["autodelete"]
+                         
                 jk = await client.send_cached_media(
                     chat_id=message.from_user.id,
                     file_id=msg.get("file_id"),
@@ -146,9 +146,12 @@ async def start(client, message):
                     protect_content=msg.get('protect', False),
                     )
                 
-                if AUTO_DELT:
-                    await asyncio.sleep(30)
-                    await jk.delete() 
+                if settings["autodelete"]:
+                    try:
+                        await asyncio.sleep(30)
+                        await jk.delete() 
+                    except:
+                        pass
                 else:
                     None
             except FloodWait as e:
@@ -213,8 +216,7 @@ async def start(client, message):
         
 
     files_ = await get_file_details(file_id)  
-    settings = await get_settings(message.chat.id)
-    AUTO_DELT = settings["autofelete"]     
+    settings = await get_settings(autodelete)         
     if not files_:
         pre, file_id = ((base64.urlsafe_b64decode(data + "=" * (-len(data) % 4))).decode("ascii")).split("_", 1)
         try:
@@ -258,8 +260,11 @@ async def start(client, message):
         )
     settings = await get_settings(message.chat.id)
     if settings['autodelete']:
-        await asyncio.sleep(30)
-        await jkd.delete()
+        try:
+            await asyncio.sleep(30)
+            await jkd.delete()
+        except:
+            pass
     else:
         return
 @Client.on_message(filters.command('channel') & filters.user(ADMINS))
