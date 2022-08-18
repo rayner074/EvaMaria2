@@ -364,13 +364,13 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     protect_content=True if ident == "filep" else False 
                 )
                 settings = await get_settings(query.message.chat.id)
-                if AUTO_DLTs == True:
+                if AUTO_DLTS == True:
                     try:
                         await query.answer('Check PM, I have sent files in pm', show_alert=True)
                         await asyncio.sleep(30)
                         await jkl.delete()
-                    except:
-                        pass
+                    except Exception as e:
+                        await query.answer("Some error", show_alert=True)
                 else:
                     await query.answer('Check PM, I have sent files in pm', show_alert=True)
         except UserIsBlocked:
@@ -412,8 +412,8 @@ async def cb_handler(client: Client, query: CallbackQuery):
             try:
                 await asyncio.sleep(30)
                 await jkk.delete()
-            except:
-                pass 
+            except Exception as e:
+                await query.answer("Some error", show_alert=True)
         else:
             None
 
