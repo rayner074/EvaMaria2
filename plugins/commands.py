@@ -17,7 +17,7 @@ import base64
 logger = logging.getLogger(__name__)
 
 BATCH_FILES = {}
-
+AUTO_DLTS = True
 @Client.on_message(filters.command("start") & filters.incoming)
 async def start(client, message):
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
@@ -144,12 +144,12 @@ async def start(client, message):
                     protect_content=msg.get('protect', False),
                     )
                 
-                if AUTO_DLT == True:
+                if AUTO_DLTS == True:
                     try:
                         await asyncio.sleep(30)
                         await jk.delete() 
-                    except:
-                        pass
+                    except Exception as e:
+                        await query.answer("Some error", show_alert=True)
                 else:
                     None
             except FloodWait as e:
@@ -255,14 +255,14 @@ async def start(client, message):
         caption=f_caption,
         protect_content=True if pre == 'filep' else False,
         )
-    if AUTO_DLT == True:
+    if AUTO_DLTS == True:
         try:
             await asyncio.sleep(30)
             await jkd.delete()
-        except:
-            pass
+        except Exception as e:
+            await query.answer("Some error", show_alert=True)
     else:
-        return
+        await query.answer("Worked", show_alert=True)
 @Client.on_message(filters.command('channel') & filters.user(ADMINS))
 async def channel_info(bot, message):
            
