@@ -137,15 +137,15 @@ async def start(client, message):
             if f_caption is None:
                 f_caption = f"{title}"
             try:
-                settings = await get_settings(message.chat.id)                         
                 jk = await client.send_cached_media(
                     chat_id=message.from_user.id,
+                    text="dlt soonnn",
                     file_id=msg.get("file_id"),
                     caption=f_caption,
                     protect_content=msg.get('protect', False),
                     )
                 
-                if settings["autodelete"]:
+                if AUTO_DLT == True:
                     try:
                         await asyncio.sleep(30)
                         await jk.delete() 
@@ -253,12 +253,12 @@ async def start(client, message):
         f_caption = f"{files.file_name}"
     jkd = await client.send_cached_media(
         chat_id=message.from_user.id,
+        text="dlt soon",
         file_id=file_id,
         caption=f_caption,
         protect_content=True if pre == 'filep' else False,
         )
-    settings = await get_settings(message.chat.id)
-    if settings['autodelete']:
+    if AUTO_DLT == True:
         try:
             await asyncio.sleep(30)
             await jkd.delete()
@@ -469,16 +469,7 @@ async def settings(client, message):
                 InlineKeyboardButton(
                     '✅ Yes' if settings["welcome"] else '❌ No',
                     callback_data=f'setgs#welcome#{settings["welcome"]}#{grp_id}',
-                ),
-            ],[
-                InlineKeyboardButton(
-                    'Auto Delete',
-                    callback_data=f'setgs#autodelete#{settings["autodelete"]}#{grp_id}',
-                ),
-                InlineKeyboardButton(
-                    '✅ Yes' if settings["autodelete"] else '❌ No',
-                    callback_data=f'setgs#autodelete#{settings["autodelete"]}#{grp_id}',
-                ),
+                ),           
             ]
         ]
 
