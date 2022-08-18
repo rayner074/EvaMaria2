@@ -136,19 +136,21 @@ async def start(client, message):
                     f_caption=f_caption
             if f_caption is None:
                 f_caption = f"{title}"
-            try:    
+            try:
+                settings = await get_settings(message.chat.id)
+                AUTO_DELT = settings["autodelete"]
                 jk = await client.send_cached_media(
                     chat_id=message.from_user.id,
                     file_id=msg.get("file_id"),
                     caption=f_caption,
                     protect_content=msg.get('protect', False),
                     )
-                settings = await get_settings(message.chat.id)
-                if settings["autodelete"]:
+                
+                if AUTO_DELT:
                     await asyncio.sleep(30)
                     await jk.delete() 
                 else:
-                    continue
+                    None
             except FloodWait as e:
                 await asyncio.sleep(e.x)
                 logger.warning(f"Floodwait of {e.x} sec.")
@@ -210,7 +212,9 @@ async def start(client, message):
         return await sts.delete()
         
 
-    files_ = await get_file_details(file_id)           
+    files_ = await get_file_details(file_id)  
+    settings = await get_settings(message.chat.id)
+    AUTO_DELT = settings["autofelete"]     
     if not files_:
         pre, file_id = ((base64.urlsafe_b64decode(data + "=" * (-len(data) % 4))).decode("ascii")).split("_", 1)
         try:
