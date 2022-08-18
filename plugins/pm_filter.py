@@ -28,7 +28,7 @@ logger.setLevel(logging.ERROR)
 
 BUTTONS = {}
 SPELL_CHECK = {}
-
+AUTO_DLT = {}
 
 @Client.on_message(filters.group & filters.text & filters.incoming)
 async def give_filter(client, message):
@@ -622,9 +622,9 @@ async def cb_handler(client: Client, query: CallbackQuery):
                                          callback_data=f'setgs#welcome#{settings["welcome"]}#{str(grp_id)}')
                 ],
                 [
-                    InlineKeyboardButton('Auto Delete', callback_data=f'setgs#autodl#{settings["autodl"]}#{str(grp_id)}'),
-                    InlineKeyboardButton('✅ Yes' if settings["autodl"] else '❌ No',
-                                         callback_data=f'setgs#autodl#{settings["autodl"]}#{str(grp_id)}')
+                    InlineKeyboardButton('Auto Delete', callback_data=f'setgs#autodelete#{settings["autodelete"]}#{str(grp_id)}'),
+                    InlineKeyboardButton('✅ Yes' if settings["autodelete"] else '❌ No',
+                                         callback_data=f'setgs#autodelete#{settings["autodelete"]}#{str(grp_id)}')
                 ]
             ]
             reply_markup = InlineKeyboardMarkup(buttons)
