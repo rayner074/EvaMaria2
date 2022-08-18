@@ -364,7 +364,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     protect_content=True if ident == "filep" else False 
                 )
                 settings = await get_settings(query.message.chat.id)
-                if settings['autodelete']:
+                if settings['autodelete'] is True:
                     await query.answer('Check PM, I have sent files in pm', show_alert=True)
                     await asyncio.sleep(30)
                     await jkl.delete()
@@ -406,7 +406,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             protect_content=True if ident == 'checksubp' else False
         )
         settings = await get_settings(message.chat.id)
-        if settings['autodelete']:
+        if settings['autodelete'] is True:
             await asyncio.sleep(30)
             await jkk.delete()
         else:
