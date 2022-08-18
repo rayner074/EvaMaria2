@@ -357,25 +357,20 @@ async def cb_handler(client: Client, query: CallbackQuery):
             elif settings['botpm']:
                 await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
                 return
-            settings = await get_settings(message.chat.id)
-            if settings['autodl']:
+            else:
                 jkl = await client.send_cached_media(
                     chat_id=query.from_user.id,
                     file_id=file_id,
                     caption=f_caption,
                     protect_content=True if ident == "filep" else False 
-                )    
-                await query.answer('Check PM, I have sent files in pm', show_alert=True)
-                await asyncio.sleep(30)
-                await jkl.delete()
-            else:
-                await client.send_cached_media(
-                    chat_id=query.from_user.id,
-                    file_id=file_id,
-                    caption=f_caption,
-                    protect_content=True if ident == "filep" else False 
-                )    
-                await query.answer('Check PM, I have sent files in pm', show_alert=True)
+                )
+                settings = await get_settings(query.message.chat.id)
+                if settings['autodl']:
+                    await query.answer('Check PM, I have sent files in pm', show_alert=True)
+                    await asyncio.sleep(30)
+                    await jkl.delete()
+                else:
+                    await query.answer('Check PM, I have sent files in pm', show_alert=True)
         except UserIsBlocked:
             await query.answer('Unblock the bot mahn !', show_alert=True)
         except PeerIdInvalid:
@@ -405,25 +400,19 @@ async def cb_handler(client: Client, query: CallbackQuery):
         if f_caption is None:
             f_caption = f"{title}"
         await query.answer()
-        return
+        jkk = await client.send_cached_media(
+            chat_id=query.from_user.id,
+            file_id=file_id,
+            caption=f_caption,
+            protect_content=True if ident == 'checksubp' else False
+        )
         settings = await get_settings(message.chat.id)
         if settings['autodl']:
-            jkk = await client.send_cached_media(
-                chat_id=query.from_user.id,
-                file_id=file_id,
-                caption=f_caption,
-                protect_content=True if ident == 'checksubp' else False
-            )
             await asyncio.sleep(30)
             await jkk.delete()
         else:
-            await client.send_cached_media(
-                chat_id=query.from_user.id,
-                file_id=file_id,
-                caption=f_caption,
-                protect_content=True if ident == 'checksubp' else False
-            )
-            
+            None
+
     elif query.data == "pages":
         await query.answer()
     elif query.data == "start":
