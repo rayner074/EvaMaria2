@@ -357,7 +357,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             elif settings['botpm']:
                 await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
                 return
-            else:   
+            elif settings['autodl']:   
                 jkl = await client.send_cached_media(
                     chat_id=query.from_user.id,
                     file_id=file_id,
@@ -367,6 +367,14 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 await query.answer('Check PM, I have sent files in pm', show_alert=True)
                 await asyncio.sleep(30)
                 await jkl.delete()
+            else:
+                await client.send_cached_media(
+                    chat_id=query.from_user.id,
+                    file_id=file_id,
+                    caption=f_caption,
+                    protect_content=True if ident == "filep" else False 
+                )    
+                await query.answer('Check PM, I have sent files in pm', show_alert=True)
         except UserIsBlocked:
             await query.answer('Unblock the bot mahn !', show_alert=True)
         except PeerIdInvalid:
@@ -396,14 +404,23 @@ async def cb_handler(client: Client, query: CallbackQuery):
         if f_caption is None:
             f_caption = f"{title}"
         await query.answer()
-        jkk = await client.send_cached_media(
-            chat_id=query.from_user.id,
-            file_id=file_id,
-            caption=f_caption,
-            protect_content=True if ident == 'checksubp' else False
-        )
-        await asyncio.sleep(30)
-        await jkk.delete()
+        elif settings['autodl']:
+            jkk = await client.send_cached_media(
+                chat_id=query.from_user.id,
+                file_id=file_id,
+                caption=f_caption,
+                protect_content=True if ident == 'checksubp' else False
+            )
+            await asyncio.sleep(30)
+            await jkk.delete()
+        else:
+            await client.send_cached_media(
+                chat_id=query.from_user.id,
+                file_id=file_id,
+                caption=f_caption,
+                protect_content=True if ident == 'checksubp' else False
+            )
+            
     elif query.data == "pages":
         await query.answer()
     elif query.data == "start":
@@ -612,6 +629,11 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     InlineKeyboardButton('Welcome', callback_data=f'setgs#welcome#{settings["welcome"]}#{str(grp_id)}'),
                     InlineKeyboardButton('✅ Yes' if settings["welcome"] else '❌ No',
                                          callback_data=f'setgs#welcome#{settings["welcome"]}#{str(grp_id)}')
+                ],
+                [
+                    InlineKeyboardButton('Auto Delete', callback_data=f'setgs#autodl#{settings["autodl"]}#{str(grp_id)}'),
+                    InlineKeyboardButton('✅ Yes' if settings["autodl"] else '❌ No',
+                                         callback_data=f'setgs#autodl#{settings["autodl"]}#{str(grp_id)}')
                 ]
             ]
             reply_markup = InlineKeyboardMarkup(buttons)
