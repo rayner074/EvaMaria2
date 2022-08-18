@@ -138,8 +138,7 @@ async def start(client, message):
                 f_caption = f"{title}"
             try:
                 jk = await client.send_cached_media(
-                    chat_id=message.from_user.id,
-                    text="dlt soonnn",
+                    chat_id=message.from_user.id,                  
                     file_id=msg.get("file_id"),
                     caption=f_caption,
                     protect_content=msg.get('protect', False),
@@ -252,7 +251,6 @@ async def start(client, message):
         f_caption = f"{files.file_name}"
     jkd = await client.send_cached_media(
         chat_id=message.from_user.id,
-        text="dlt soon",
         file_id=file_id,
         caption=f_caption,
         protect_content=True if pre == 'filep' else False,
