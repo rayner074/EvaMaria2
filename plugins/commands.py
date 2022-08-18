@@ -143,8 +143,12 @@ async def start(client, message):
                     caption=f_caption,
                     protect_content=msg.get('protect', False),
                     )
-                await asyncio.sleep(50)
-                await jk.delete() 
+                settings = await get_settings(message.chat.id)
+                if settings["autodelete"]:
+                    await asyncio.sleep(30)
+                    await jk.delete() 
+                else:
+                    continue
             except FloodWait as e:
                 await asyncio.sleep(e.x)
                 logger.warning(f"Floodwait of {e.x} sec.")
@@ -242,21 +246,18 @@ async def start(client, message):
             f_caption=f_caption
     if f_caption is None:
         f_caption = f"{files.file_name}"
-        jkd = await client.send_cached_media(
-           chat_id=message.from_user.id,
-           file_id=file_id,
-           caption=f_caption,
-           protect_content=True if pre == 'filep' else False,
-           )
-        await asyncio.sleep(50)
-        await jkd.delete() 
+    jkd = await client.send_cached_media(
+        chat_id=message.from_user.id,
+        file_id=file_id,
+        caption=f_caption,
+        protect_content=True if pre == 'filep' else False,
+        )
+    settings = await get_settings(message.chat.id)
+    if settings['autodelete']:
+        await asyncio.sleep(30)
+        await jkd.delete()
     else:
-       await client.send_cached_media(
-           chat_id=message.from_user.id,
-           file_id=file_id,
-           caption=f_caption,
-           protect_content=True if pre == 'filep' else False,
-           )
+        continue
 @Client.on_message(filters.command('channel') & filters.user(ADMINS))
 async def channel_info(bot, message):
            
@@ -464,11 +465,11 @@ async def settings(client, message):
             ],[
                 InlineKeyboardButton(
                     'Auto Delete',
-                    callback_data=f'setgs#autodl#{settings["autodl"]}#{grp_id}',
+                    callback_data=f'setgs#autodelete#{settings["autodelete"]}#{grp_id}',
                 ),
                 InlineKeyboardButton(
-                    '✅ Yes' if settings["autodl"] else '❌ No',
-                    callback_data=f'setgs#autodl#{settings["autodl"]}#{grp_id}',
+                    '✅ Yes' if settings["autodelete"] else '❌ No',
+                    callback_data=f'setgs#autodelete#{settings["autodelete"]}#{grp_id}',
                 ),
             ]
         ]
