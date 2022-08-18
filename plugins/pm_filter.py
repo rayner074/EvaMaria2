@@ -353,11 +353,12 @@ async def cb_handler(client: Client, query: CallbackQuery):
         try:
             if AUTH_CHANNEL and not await is_subscribed(client, query):
                 await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
-                return
+                return  
             elif settings['botpm']:
                 await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
                 return
-            elif settings['autodl']:   
+            settings = await get_settings(message.chat.id)
+            elif settings['autodl']:
                 jkl = await client.send_cached_media(
                     chat_id=query.from_user.id,
                     file_id=file_id,
@@ -405,6 +406,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             f_caption = f"{title}"
         await query.answer()
         return
+        settings = await get_settings(message.chat.id)
         if settings['autodl']:
             jkk = await client.send_cached_media(
                 chat_id=query.from_user.id,
