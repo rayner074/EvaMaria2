@@ -257,12 +257,13 @@ async def start(client, message):
         )
     if AUTO_DLTS is True:
         try:
+            await message.answer("delete Soon")
             await asyncio.sleep(10)
             await jkd.delete()
         except Exception as e:
             return
     else:
-        await query.answer("Worked", show_alert=True)
+        None
 @Client.on_message(filters.command('channel') & filters.user(ADMINS))
 async def channel_info(bot, message):
            
