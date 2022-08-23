@@ -370,7 +370,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                         await asyncio.sleep(10)
                         await jkl.delete()
                     except Exception as e:
-                        return
+                        continue
                 else:
                     await query.answer('Check PM, I have sent files in pm', show_alert=True)
         except UserIsBlocked:
@@ -413,7 +413,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 await asyncio.sleep(10)
                 await jkk.delete()
             except Exception as e:
-                return
+                continue 
         else:
             None
 
