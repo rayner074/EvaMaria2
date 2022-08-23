@@ -408,7 +408,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             caption=f_caption,
             protect_content=True if ident == 'checksubp' else False
         )      
-        if AUTO_DLTS is True:
+        if AUTO_DLTS == True:
             try:
                 await asyncio.sleep(10)
                 await jkk.delete()
@@ -731,20 +731,20 @@ async def auto_filter(client, msg, spoll=False):
             msgd=await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024],
                                       reply_markup=InlineKeyboardMarkup(btn))
             await asyncio.sleep(10)
-            await msgd.message.delete()
+            await msgd.delete()
         except (MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty):
             pic = imdb.get('poster')
             poster = pic.replace('.jpg', "._V1_UX360.jpg")
             msgd=await message.reply_photo(photo=poster, caption=cap[:1024], reply_markup=InlineKeyboardMarkup(btn))
             await asyncio.sleep(10)
-            await msgd.message.delete()
+            await msgd.delete()
         except Exception as e:
             logger.exception(e)
             await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn))
     else:
         msgd=await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn))
         await asyncio.sleep(10)
-        await msgd.message.delete()
+        await msgd.delete()
     if spoll:
         await msg.message.delete()
 
