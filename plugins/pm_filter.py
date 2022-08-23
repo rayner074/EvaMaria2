@@ -8,7 +8,7 @@ from Script import script
 import pyrogram
 from database.connections_mdb import active_connection, all_connections, delete_connection, if_active, make_active, \
     make_inactive
-from info import ADMINS, AUTH_CHANNEL, AUTH_USERS, CUSTOM_FILE_CAPTION, AUTH_GROUPS, P_TTI_SHOW_OFF, IMDB, AUTO_DLT, \
+from info import ADMINS, AUTH_CHANNEL, AUTH_USERS, CUSTOM_FILE_CAPTION, AUTH_GROUPS, P_TTI_SHOW_OFF, IMDB, AUTO_DLTS, \
     SINGLE_BUTTON, SPELL_CHECK_REPLY, IMDB_TEMPLATE
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from pyrogram import Client, filters, enums
@@ -364,13 +364,13 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     protect_content=True if ident == "filep" else False 
                 )
                 settings = await get_settings(query.message.chat.id)
-                if AUTO_DLTS == True:
+                if AUTO_DLTS is True:
                     try:
-                        await query.answer('Check PM, I have sent files in pm', show_alert=True)
-                        await asyncio.sleep(30)
+                        await query.answer('Check PM, I have sent files in pm will be deleted soon', show_alert=True)
+                        await asyncio.sleep(10)
                         await jkl.delete()
                     except Exception as e:
-                        await query.answer("Some error", show_alert=True)
+                        logger.exception(e)
                 else:
                     await query.answer('Check PM, I have sent files in pm', show_alert=True)
         except UserIsBlocked:
@@ -408,12 +408,12 @@ async def cb_handler(client: Client, query: CallbackQuery):
             caption=f_caption,
             protect_content=True if ident == 'checksubp' else False
         )      
-        if AUTO_DLTS == True:
+        if AUTO_DLTS is True:
             try:
-                await asyncio.sleep(30)
+                await asyncio.sleep(10)
                 await jkk.delete()
             except Exception as e:
-                await query.answer("Some error", show_alert=True)
+                logger.exception(e)
         else:
             None
 
@@ -725,20 +725,26 @@ async def auto_filter(client, msg, spoll=False):
             **locals()
         )
     else:
-        cap = f"Here is your Results : \n**{search}**"
+        cap = f"Here is your Results : \n**{search}** \n\nthis will delete in 10 Seconds"
     if imdb and imdb.get('poster'):
         try:
             await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024],
                                       reply_markup=InlineKeyboardMarkup(btn))
+            await asyncio.sleep(10)
+            await message.delete()
         except (MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty):
             pic = imdb.get('poster')
             poster = pic.replace('.jpg', "._V1_UX360.jpg")
             await message.reply_photo(photo=poster, caption=cap[:1024], reply_markup=InlineKeyboardMarkup(btn))
+            await asyncio.sleep(10)
+            await message.delete()
         except Exception as e:
             logger.exception(e)
             await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn))
     else:
         await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn))
+        await asyncio.sleep(10)
+            await message.delete()
     if spoll:
         await msg.message.delete()
 
