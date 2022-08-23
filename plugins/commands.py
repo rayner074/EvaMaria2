@@ -8,7 +8,7 @@ from pyrogram.errors import ChatAdminRequired, FloodWait
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from database.ia_filterdb import Media, get_file_details, unpack_new_file_id
 from database.users_chats_db import db
-from info import CHANNELS, ADMINS, AUTH_CHANNEL, LOG_CHANNEL, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, PROTECT_CONTENT,AUTO_DLT
+from info import CHANNELS, ADMINS, AUTH_CHANNEL, LOG_CHANNEL, PICS, BATCH_FILE_CAPTION, CUSTOM_FILE_CAPTION, PROTECT_CONTENT,AUTO_DLTS
 from utils import get_settings, get_size, is_subscribed, save_group_settings, temp
 from database.connections_mdb import active_connection
 import re
@@ -17,7 +17,7 @@ import base64
 logger = logging.getLogger(__name__)
 
 BATCH_FILES = {}
-AUTO_DLTS = True
+#AUTO_DLTS = True
 @Client.on_message(filters.command("start") & filters.incoming)
 async def start(client, message):
     if message.chat.type in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
@@ -144,12 +144,12 @@ async def start(client, message):
                     protect_content=msg.get('protect', False),
                     )
                 
-                if AUTO_DLTS == True:
+                if AUTO_DLTS is True:
                     try:
                         await asyncio.sleep(30)
                         await jk.delete() 
                     except Exception as e:
-                        await query.answer("Some error", show_alert=True)
+                        logger.exception(e)
                 else:
                     None
             except FloodWait as e:
@@ -255,7 +255,7 @@ async def start(client, message):
         caption=f_caption,
         protect_content=True if pre == 'filep' else False,
         )
-    if AUTO_DLTS == True:
+    if AUTO_DLTS is True:
         try:
             await asyncio.sleep(30)
             await jkd.delete()
