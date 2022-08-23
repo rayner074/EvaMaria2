@@ -146,10 +146,10 @@ async def start(client, message):
                 
                 if AUTO_DLTS is True:
                     try:
-                        await asyncio.sleep(30)
+                        await asyncio.sleep(10)
                         await jk.delete() 
                     except Exception as e:
-                        logger.exception(e)
+                        return
                 else:
                     None
             except FloodWait as e:
@@ -257,10 +257,10 @@ async def start(client, message):
         )
     if AUTO_DLTS is True:
         try:
-            await asyncio.sleep(30)
+            await asyncio.sleep(10)
             await jkd.delete()
         except Exception as e:
-            await query.answer("Some error", show_alert=True)
+            return
     else:
         await query.answer("Worked", show_alert=True)
 @Client.on_message(filters.command('channel') & filters.user(ADMINS))
