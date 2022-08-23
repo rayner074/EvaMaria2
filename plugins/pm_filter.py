@@ -362,8 +362,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     file_id=file_id,
                     caption=f_caption,
                     protect_content=True if ident == "filep" else False 
-                )
-                settings = await get_settings(query.message.chat.id)
+                ) 
                 if AUTO_DLTS is True:
                     try:
                         await query.answer('Check PM, I have sent files in pm will be deleted soon', show_alert=True)
@@ -371,6 +370,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                         await jkl.delete()
                     except Exception as e:
                         logger.exception(e)
+                        return
                 else:
                     await query.answer('Check PM, I have sent files in pm', show_alert=True)
         except UserIsBlocked:
