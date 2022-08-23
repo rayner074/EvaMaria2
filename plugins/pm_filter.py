@@ -28,7 +28,7 @@ logger.setLevel(logging.ERROR)
 
 BUTTONS = {}
 SPELL_CHECK = {}
-AUTO_DLTS = True
+#AUTO_DLTS = True
 
 @Client.on_message(filters.group & filters.text & filters.incoming)
 async def give_filter(client, message):
