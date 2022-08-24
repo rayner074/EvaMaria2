@@ -406,12 +406,12 @@ async def cb_handler(client: Client, query: CallbackQuery):
             caption=f_caption,
             protect_content=True if ident == 'checksubp' else False
         )      
-        elif AUTO_DLTS == True:
-            try:         
-                await asyncio.sleep(ADL_TIME)
-                await jkk.delete()
-            except:
-                pass            
+            if AUTO_DLTS == True:
+                try:         
+                    await asyncio.sleep(ADL_TIME)
+                    await jkk.delete()
+                except:
+                    pass            
         else:
             None
 
