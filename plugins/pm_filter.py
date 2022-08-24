@@ -363,14 +363,14 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     caption=f_caption,
                     protect_content=True if ident == "filep" else False 
                 ) 
-                if AUTO_DLTS is True:
+                if AUTO_DLTS != False:
                     try:
                         await query.answer('Check PM, I have sent files in pm will be deleted soon', show_alert=True)
                         await asyncio.sleep(10)
                         await jkl.delete()
                     except Exception as e:
                         logger.exception(e)
-                        return
+                        pass
                 else:
                     await query.answer('Check PM, I have sent files in pm', show_alert=True)
         except UserIsBlocked:
@@ -408,12 +408,13 @@ async def cb_handler(client: Client, query: CallbackQuery):
             caption=f_caption,
             protect_content=True if ident == 'checksubp' else False
         )      
-        if AUTO_DLTS is True:
+        if AUTO_DLTS != False:
             try:
                 await asyncio.sleep(10)
                 await jkk.delete()
             except Exception as e:
-                logger.exception(e) 
+                logger.exception(e)
+                pass
         else:
             None
 
