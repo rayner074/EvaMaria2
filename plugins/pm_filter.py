@@ -355,7 +355,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             elif settings['botpm']:
                 await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
                 return
-            
+            else:
                 jkl = await client.send_cached_media(
                     chat_id=query.from_user.id,
                     file_id=file_id,
@@ -365,11 +365,11 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 if AUTO_DLTS == True:
                     try:
                         await query.answer('Check PM, I have sent files in pm will be deleted soon', show_alert=True)
-                        await asyncio.sleep(ADL_TIME)
+                        await asyncio.sleep(15)
                         await jkl.delete()
                     except:
                         pass                       
-                else:
+                elif AUTO_DLTS == False:
                     await query.answer('Check PM, I have sent files in pm', show_alert=True)
         except UserIsBlocked:
             await query.answer('Unblock the bot mahn !', show_alert=True)
