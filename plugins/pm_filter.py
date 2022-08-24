@@ -8,7 +8,7 @@ from Script import script
 import pyrogram
 from database.connections_mdb import active_connection, all_connections, delete_connection, if_active, make_active, \
     make_inactive
-from info import ADMINS, AUTH_CHANNEL, AUTH_USERS, CUSTOM_FILE_CAPTION, AUTH_GROUPS, P_TTI_SHOW_OFF, IMDB, AUTO_DLTS, \
+from info import ADMINS, AUTH_CHANNEL, AUTH_USERS, CUSTOM_FILE_CAPTION, AUTH_GROUPS, P_TTI_SHOW_OFF, IMDB, AUTO_DLTS, ADL_TIME , \
     SINGLE_BUTTON, SPELL_CHECK_REPLY, IMDB_TEMPLATE
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from pyrogram import Client, filters, enums
@@ -28,9 +28,8 @@ logger.setLevel(logging.ERROR)
 
 BUTTONS = {}
 SPELL_CHECK = {}
-#AUTO_DLTS = True
 
-@Client.on_message(filters.group & filters.text & filters.incoming)
+@Client.on_message((filters.group | filters.private) & filters.text & filters.incoming))
 async def give_filter(client, message):
     k = await manual_filters(client, message)
     if k == False:
@@ -366,11 +365,11 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 if AUTO_DLTS != False:
                     try:
                         await query.answer('Check PM, I have sent files in pm will be deleted soon', show_alert=True)
-                        await asyncio.sleep(10)
+                        await asyncio.sleep(ADL_TIME)
                         await jkl.delete()
                     except Exception as e:
                         logger.exception(e)
-                        pass
+                        continue 
                 else:
                     await query.answer('Check PM, I have sent files in pm', show_alert=True)
         except UserIsBlocked:
@@ -410,11 +409,10 @@ async def cb_handler(client: Client, query: CallbackQuery):
         )      
         if AUTO_DLTS != False:
             try:
-                await asyncio.sleep(10)
+                await asyncio.sleep(ADL_TIME)
                 await jkk.delete()
             except Exception as e:
-                logger.exception(e)
-                pass
+                logger.exception(e)   
         else:
             None
 
