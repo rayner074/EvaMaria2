@@ -52,7 +52,7 @@
         },
         "AUTO_DLTS": {
             "description": "Set this true if you don't want autodelete features"
-            "Value" : "false",
+            "Value" : "true",
             "required": false
         },
         "AUTH_CHANNEL": {
