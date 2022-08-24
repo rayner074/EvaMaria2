@@ -37,7 +37,7 @@ DATABASE_NAME = environ.get('DATABASE_NAME', "Rajappan")
 COLLECTION_NAME = environ.get('COLLECTION_NAME', 'Telegram_files')
 
 #Auto Delete 
-AUTO_DLTS = bool(environ.get('AUTO_DLTS', 'false'))
+AUTO_DLTS = bool(environ.get('AUTO_DLTS', ''))
 ADL_TIME = environ.get('ADL_TIME', '20')
 
 # Others
