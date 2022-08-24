@@ -1,5 +1,6 @@
 # Kanged From @TroJanZheX
 import asyncio
+import os
 import re
 import ast
 import math
@@ -28,7 +29,7 @@ logger.setLevel(logging.ERROR)
 
 BUTTONS = {}
 SPELL_CHECK = {}
-AUTO_DLTS = True
+AUTO_DLTS = bool(os.environ.get("AUTO_DLTS" , ""))
 
 @Client.on_message((filters.group | filters.private) & filters.text & filters.incoming)
 async def give_filter(client, message):
